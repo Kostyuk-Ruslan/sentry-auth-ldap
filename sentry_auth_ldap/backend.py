@@ -3,7 +3,6 @@ from django.conf import settings
 from sentry.models import (
     Organization,
     OrganizationMember,
-    UserEmail,
     UserOption,
 )
 
@@ -70,9 +69,6 @@ class SentryLdapBackend(LDAPBackend):
             defaults = { 'is_verified': True }
         else:
             defaults = None
-
-        for mail in mail_attr or [email]:
-            UserEmail.objects.update_or_create(defaults=defaults, user=user, email=mail)
 
         organization = _find_default_organization()
         if organization:
